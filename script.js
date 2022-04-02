@@ -1,3 +1,7 @@
+// Global variables relating to HTML
+var main = document.getElementById("main");
+var startQuiz = document.querySelector(".startQuiz")
+
 // intializes the program, pulls highscores from storage.
 function init() {
     // Loads highscores from local dat
@@ -10,9 +14,6 @@ function init() {
 
     displayHighscores();
 }
-
-// Starts the quiz
-var startQuiz = document.querySelector(".startQuiz")
 
 startQuiz.addEventListener("click", function() {
     //Remove the <p> element describing the game
@@ -112,6 +113,13 @@ function displayQuestion () {
     mainHeader.textContent = question;
 }
 // Take in the user selection
+main.addEventListener("click", function(event) {
+    var element = event.target;
+
+    if (element.matches("li") === true) {
+        console.log('this worked!');
+    }
+});
 
 // Be able to select an Answer
 
@@ -178,18 +186,17 @@ function getQuestion () {
 }
 
 // Loads answers as button functions
-var main = document.getElementById("main");
-
 function loadAnswers() {
     // Sets up an ordered list for the answers to display
     var ol = document.createElement("ol");
-    // list.setAttribute("id", "answerList");
+    ol.setAttribute("id", "answerList");
 
     // Loads answers into the list
     for(var i = 0; i < answerArray.length;  i++) {
         var li = document.createElement("li");
         li.textContent = answerArray[i][0];
-        li.setAttribute('data-correct', answerArray[i][1])
+        li.setAttribute('data-correct', answerArray[i][1]);
+
         ol.appendChild(li);
     }
 
@@ -198,9 +205,9 @@ function loadAnswers() {
 }
 
 // removes the current answer list from HTML
-// function clearAnswers () {
-//     var list = getElementById("answerList");
-//     list.remove();
-// }
+function clearAnswers () {
+    var list = getElementById("answerList");
+    list.remove();
+}
 
 // init();
