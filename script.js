@@ -115,9 +115,23 @@ function displayQuestion () {
 // Take in the user selection
 main.addEventListener("click", function(event) {
     var element = event.target;
-
+    var isCorrect = element.getAttribute("data-correct");
+    // Determines if the selected element was one of the answers from the list
     if (element.matches("li") === true) {
-        console.log('this worked!');
+        // Determine if answer correct
+        if (isCorrect === 'true') {
+            console.log('answer correct!');
+        }
+        else {
+            console.log('answer wrong :(');
+        }
+
+
+
+
+
+
+
     }
 });
 
