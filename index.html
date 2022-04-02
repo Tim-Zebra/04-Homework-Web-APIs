@@ -10,15 +10,21 @@
     <body>
         <header>
             <!-- Highscores button in top left -->
-            <h4 id="highscores">Highscores</h4>
+            <h4 id="highscores"><button id="highscoresButton">Highscores</button></h4>
             <!-- Time to display in the top right-->
-            <h4 id="timer">Timer</h4>
+            <h4 id="timer">Timer: <span id="timeLeft"></span> seconds</h4>
         </header>
 
         <main>
             <!-- interactive Content -->
             <!-- Contains a Header ("This is a Quiz for coders!!")-->
             <h1 id="mainHeader">Coding Quiz Challenge</h1>
+            <p id="introParagraph">Do you want to play a game? The clock starts when you hit "Go"
+                You will have 20 seconds to answer as many questions as you can.
+                Your score will be totaled at the end, and you'll be able to save it under your name.
+                But beware! If you get a question wrong you will lose 5 seconds. Have fun.
+            </p>
+            <button id="mainStartButton" class="startQuiz">Start</button>
             <!-- Paragraph (Some info on how the quiz works/what its about ) -->
             <!-- Button (Up to 2 buttons for yes and no criteria, these can be translated to try again or view highscores etc. -->
             <!-- Button -->
