@@ -1,6 +1,11 @@
 // Global variables relating to HTML
 var main = document.getElementById("main");
 var startQuiz = document.querySelector(".startQuiz")
+var timerEl = document.getElementById('timer');
+
+// Other variables
+var currentScore = 0;
+var timeLeft = 20;
 
 // intializes the program, pulls highscores from storage.
 function init() {
@@ -23,6 +28,8 @@ startQuiz.addEventListener("click", function() {
     }
     // Resets the question value to the starting question
     questionNumber = 1;
+    // Resets the score
+    currentScore = 0;
 
     // Starts the timer
     timer();
@@ -32,10 +39,6 @@ startQuiz.addEventListener("click", function() {
 
     // displays questions and answers
     displayQuestion();
-    // Display the answers 
-
-    // Display the submit button
-
 });
 
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ A button for view Highscores  //////////////////////////////////////////
@@ -68,26 +71,27 @@ var highschoresEl = document.getElementById('highscores');
 // Timer displays in top right corner.
 // Appears only during quiz
 
-//variables needed for timer function
-var timerEl = document.getElementById('timer');
-
 // Timer that counts down by seconds
 function timer() {
-    // Initial clock in seconds.
-    var timeLeft = 20;
-    timerEl.textContent = "Time Remaining: " + timeLeft;
+    // Initial clock in seconds. Always use 1 value less than what you want
+    timeLeft = 19;
+    // +1 accounts for the lag at the start due to the timeInterval
+    timerEl.textContent = "Time Remaining: " + (timeLeft+1) + " seconds";
 
     // Time counter
     var timeInterval = setInterval(function () {
-      timeLeft--;
-      if(timeLeft < 0) {
-        clearInterval(timeInterval);
-        timerEl.textContent = "TIMES UP!";
-        gameEnd();
-      }
-      timerEl.textContent = "Time Remaining: " + timeLeft + " seconds";
-    
+        timerEl.textContent = "Time Remaining: " + timeLeft + " seconds";
+        timeLeft--;
 
+        if(timeLeft < 9) {
+            timerEl.setAttribute("style", "color: red");
+        }
+
+        if(timeLeft < 0) {
+            clearInterval(timeInterval);
+            timerEl.textContent = "TIMES UP!";
+            gameEnd();
+        }  
      }, 1000);
   }
 
@@ -121,17 +125,13 @@ main.addEventListener("click", function(event) {
         // Determine if answer correct
         if (isCorrect === 'true') {
             console.log('answer correct!');
+            currentScore ++;
         }
         else {
             console.log('answer wrong :(');
+            timeLeft = timeLeft-2;
+            
         }
-
-
-
-
-
-
-
     }
 });
 
@@ -142,7 +142,7 @@ main.addEventListener("click", function(event) {
 
 
 // \\\\\\\\\\\\\\\\\\\\\\\QUESTION BANK///////////////////////////////
-
+// Global variables ideally to only be used within the "Question Bank" scope.
 // Stores questions
 var questionBank = {
     question1: {
@@ -165,18 +165,20 @@ var questionBank = {
     }
 }
 
+// Array to Store Answers
 var answerArray = [];
 // variable with the requested question#
 var questionNumber = 1;
 
-// Retrieves the question and puts value to the question and answer variables
-// To use: answer is an array. answer[0]=the text for the answer, answer[1]=if the answer is correct or not
-
+// creates global variables for the Question functions without a null value
 var question = 'Question: ';
 var answer1 = 'Answer 1';
 var answer2 = 'Answer 2';
 var answer3 = 'Answer 3';
 var answer4 = 'Answer 4';
+
+// Retrieves the question and puts value to the question and answer variables
+// To use: answer is an array. answer[0]=the text for the answer, answer[1]=if the answer is correct or not
 
 function getQuestion () {
     var questionChooser = 'question' + questionNumber;
