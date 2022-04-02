@@ -110,16 +110,20 @@ var mainHeader = document.getElementById('mainHeader');
 
 // Display a question with possible answers
 function displayQuestion () {
+
     // Gets question and displays answers
     getQuestion();
     loadAnswers();
-
+    
     mainHeader.textContent = question;
+
+
 }
 // Take in the user selection
 main.addEventListener("click", function(event) {
     var element = event.target;
     var isCorrect = element.getAttribute("data-correct");
+
     // Determines if the selected element was one of the answers from the list
     if (element.matches("li") === true) {
         // Determine if answer correct
@@ -132,13 +136,11 @@ main.addEventListener("click", function(event) {
             timeLeft = timeLeft-2;
             
         }
+    questionNumber ++;
+    clearAnswers();
+    displayQuestion();    
     }
 });
-
-// Be able to select an Answer
-
-// Determine if answer is correct or not, and consequences
-
 
 
 // \\\\\\\\\\\\\\\\\\\\\\\QUESTION BANK///////////////////////////////
@@ -157,10 +159,10 @@ var questionBank = {
     question2: {
         question: 'This is a Question#2?',
         answers: {
-            choice1: ["This is a answer #1?", false],
-            choice2: ["This is a answer #2?", false],
-            choice3: ["This is a answer #3?", true],
-            choice4: ["This is a answer #4?", false],
+            choice1: ["This is a answer #21?", false],
+            choice2: ["This is a answer #22?", false],
+            choice3: ["This is a answer #23?", true],
+            choice4: ["This is a answer #24?", false],
         }
     }
 }
@@ -182,11 +184,10 @@ var answer4 = 'Answer 4';
 
 function getQuestion () {
     var questionChooser = 'question' + questionNumber;
-
     // Dictates what happens when there are no more questions left in the question bank
     if (Object.keys(questionBank).length < questionNumber) {
         question = 'No more questions to choose from!';
-        console.log(question);
+        answerArray = [];
         return;
     }
 
@@ -222,7 +223,7 @@ function loadAnswers() {
 
 // removes the current answer list from HTML
 function clearAnswers () {
-    var list = getElementById("answerList");
+    var list = document.getElementById("answerList");
     list.remove();
 }
 
