@@ -145,9 +145,15 @@ function displayHighscores () {
     // Adds completed table to the main tag
     main.appendChild(table);
 
-    // Display a list of highscores
+     var button = document.createElement("button");
+     button.textContent = "ok";
 
+     main.appendChild(button);
 
+    //  I want to cause an "event Default" to reset the game to the starting page
+     button.addEventListener("click", function() {
+        location.reload();
+     });
 }
 
 // When highscores button is selected, before game starts, player can view highscores
@@ -221,7 +227,6 @@ main.addEventListener("click", function(event) {
         else {
             console.log('answer wrong :(');
             timeLeft = timeLeft-2;
-            
         }
     questionNumber ++;
     clearAnswers();
