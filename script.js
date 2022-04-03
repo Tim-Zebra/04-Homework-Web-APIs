@@ -48,7 +48,7 @@ startQuiz.addEventListener("click", function() {
 // displays in top left corner. When highscores are being view, dispears
 
 // highscores array holds arrays made of [score, initials]
-var highscores = [];
+var highscoresArray = [];
 var highschoresEl = document.getElementById('highscores');
 
 // Generates highscore form 
@@ -86,24 +86,24 @@ function formHighscore () {
         }
         
         array = [currentScore, initials];
-        highscores.push(array);
+        highscoresArray.push(array);
         initialsInput.value = "";
         
-        console.log(highscores);
+        storeHighscores();
+        displayHighscores();
     })
  }
 
 // Store highscore locally
-
-
-// Store highscore locally
 function storeHighscores() {
-
+    localStorage.setItem("highscores", JSON.stringify(highscoresArray));
 }
-// // display highscore list
-// function displayHighscore () {
 
-// }
+// // display highscore list
+function displayHighscores () {
+    highscoresArray = JSON.parse(localStorage.getItem("highscores"));
+    
+}
 
 // When highscores button is selected, before game starts, player can view highscores
 
