@@ -10,7 +10,7 @@ var submitButton = null;
 var currentScore = 0;
 var timeLeft = 0;
 
-// highscores array will hold player data as objects. Each player's data will look like: {initials: , scores: }
+// highscores array will hold player data as objects. Each player's data will look like: {initials: , score: }
 var highscoresArray = [];
 var highschoresEl = document.getElementById('highscores');
 
@@ -110,21 +110,41 @@ function displayHighscores () {
     // // Arrange highscores by...score
     highscoresArray.sort((a, b) => b.score - a.score)
 
-    // // Creates a list of highscores.
-    // var ol = document.createElement("ol");
-    // ol.setAttribute("id", "answerList");
+    // Creates a table for high scores
+    var table = document.createElement("table");
+    var tr = document.createElement("tr");
+    table.setAttribute("class", "highscoresList");
 
-    // // Loads highscores into a list
-    // for(var i = 0; i < answerArray.length;  i++) {
-    //     var li = document.createElement("li");
-    //     li.textContent = answerArray[i][0];
-    //     li.setAttribute('data-correct', answerArray[i][1]);
+    // creates the table header
+    var thPlayer = document.createElement("th");
+    var thScores = document.createElement("th");
+    thPlayer.textContent = "Players:";
+    tr.appendChild(thPlayer);
 
-    //     ol.appendChild(li);
-    // }
+    thScores.textContent = "Scores:";
+    tr.appendChild(thScores);
 
-    // // Adds completed list to the main tag
-    // main.appendChild(ol);
+    // adds header to table
+    table.appendChild(tr);
+
+    // Loads highscores into the table
+    for(var i = 0; i < highscoresArray.length;  i++) {
+        tr = document.createElement("tr");
+        tdPlayer = document.createElement("td");
+        tdScore = document.createElement("td");
+
+        tdPlayer.textContent = highscoresArray[i].initials;
+        tr.appendChild(tdPlayer);
+
+        tdScore.textContent = highscoresArray[i].score;
+        tr.appendChild(tdScore);
+
+        table.appendChild(tr);
+     }
+
+    // Adds completed table to the main tag
+    main.appendChild(table);
+
     // Display a list of highscores
 
 
