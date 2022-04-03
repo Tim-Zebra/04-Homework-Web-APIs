@@ -2,10 +2,12 @@
 var main = document.getElementById("main");
 var startQuiz = document.querySelector(".startQuiz")
 var timerEl = document.getElementById('timer');
+var mainHeader = document.getElementById('mainHeader');
+var initialsInput = null;
 
 // Other variables
 var currentScore = 0;
-var timeLeft = 20;
+var timeLeft = 0;
 
 // intializes the program, pulls highscores from storage.
 function init() {
@@ -44,20 +46,41 @@ startQuiz.addEventListener("click", function() {
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ A button for view Highscores  //////////////////////////////////////////
 // displays in top left corner. When highscores are being view, dispears
 
-// highscores object inplies stored key: values as name: score
-var highscores = {};
+// highscores array holds arrays made of [score, initials]
+var highscores = [];
 var highschoresEl = document.getElementById('highscores');
 
-// // Submit highscore 
-// function submitHighscore () {
-//     event.preventDefault();
-// }
+// Generates highscore form 
+function formHighscore () {
+    // creates the submission form for high scores
+    var form = document.createElement("form");
+    form.setAttribute('id', 'form');
+    form.setAttribute('method', 'POST');
 
-// // Store highscore locally
-// function storeHighscore () {
+    var input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("placeholder", "your intials...");
+    input.setAttribute("name", "initialsText");
+    input.setAttribute("id", "initialsText");
 
-// }
+    var button = document.createElement("button");
+    button.setAttribute('id', 'submitButton');
+    button.textContent = 'Submit';
 
+    form.appendChild(input);
+    form.appendChild(button);
+    main.appendChild(form);
+
+    initialsInput = document.getElementById('initialsText');
+ }
+
+// Store highscore locally
+
+
+// Store highscore locally
+function storeHighscores() {
+
+}
 // // display highscore list
 // function displayHighscore () {
 
@@ -74,7 +97,7 @@ var highschoresEl = document.getElementById('highscores');
 // Timer that counts down by seconds
 function timer() {
     // Initial clock in seconds. Always use 1 value less than what you want
-    timeLeft = 19;
+    timeLeft = 2;
     // +1 accounts for the lag at the start due to the timeInterval
     timerEl.textContent = "Time Remaining: " + (timeLeft+1) + " seconds";
 
@@ -90,7 +113,7 @@ function timer() {
         if(timeLeft < 0) {
             clearInterval(timeInterval);
             timerEl.textContent = "TIMES UP!";
-            gameEnd();
+            endGame();
         }  
      }, 1000);
   }
@@ -99,14 +122,12 @@ function timer() {
 // Ends the game. displays 
 function endGame () {
     // Removes the option to question and answer
+    mainHeader.textContent = "Enter your intials to save your highscore!";
+    clearAnswers();
+
     // Displays the form to submit highscore
+    formHighscore();
 }
-
-
-//varibles needed for main quiz function
-var mainHeader = document.getElementById('mainHeader');
-
-//pull a question from the question bank
 
 // Display a question with possible answers
 function displayQuestion () {
@@ -119,8 +140,10 @@ function displayQuestion () {
 
 
 }
-// Take in the user selection
+// Processes user selection
 main.addEventListener("click", function(event) {
+    event.preventDefault();
+
     var element = event.target;
     var isCorrect = element.getAttribute("data-correct");
 
@@ -140,6 +163,25 @@ main.addEventListener("click", function(event) {
     clearAnswers();
     displayQuestion();    
     }
+
+    // Determines if highscoreSubmit Button was pressed
+    if (element.matches("button") === true) {
+        var initials = initialsInput.value.trim();
+        var array = [];
+    
+        if (initials === "") {
+            return;
+        }
+    
+        array = [currentScore, initials];
+        highscores.push(array);
+        initialsInput.value = "";
+    
+        console.log(highscores);
+        // storeHighscores();
+    }
+
+
 });
 
 
