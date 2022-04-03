@@ -3,6 +3,8 @@ var main = document.getElementById("main");
 var startQuiz = document.querySelector(".startQuiz")
 var timerEl = document.getElementById('timer');
 var mainHeader = document.getElementById('mainHeader');
+var buttonHighscores = document.getElementById("highscores");
+
 var initialsInput = null;
 var submitButton = null;
 
@@ -37,13 +39,23 @@ startQuiz.addEventListener("click", function() {
 
     // Hide Start Button
     startQuiz.remove();
+    buttonHighscores.remove();
 
     // displays questions and answers
     displayQuestion();
 });
 
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ A button for view Highscores  //////////////////////////////////////////
-// displays in top left corner. When highscores are being view, dispears
+// Allows viewing of highscores before game starts.
+buttonHighscores.addEventListener("click", function () {
+    // Hides the intro paragraph and Start button
+    introParagraph.remove();
+    startQuiz.remove();
+
+    // displays highscores
+    displayHighscores();
+});
+
 
 // Generates highscore form 
 function formHighscore () {
@@ -103,6 +115,10 @@ function getHighscores () {
 // // display highscore list
 function displayHighscores () {
     getHighscores();
+
+    // Clears the heading
+    buttonHighscores.remove();
+    timerEl.remove();
 
     // Display the highscores
     mainHeader.textContent = "HIGHSCORES";
