@@ -1,0 +1,56 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button {
+    font-weight: bold;
+}
+
+header {
+    /* Sets position to be top no matter what */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+footer {
+    /* sets position to the bottom no matter what */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+main {
+    position: relative;
+}
+
+#timer {
+    display: inline-block;
+    margin-right: 2%;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+#highscores {
+    display: inline-block;
+}
+
+@media screen and (max-width: 400px) {
+    header {
+      display:block;
+        text-align: center;
+    }
+
+    #highscores {
+        display: block;
+        position: relative;
+    }
+    #timer {
+        display: block;
+        position: relative;
+    }
+  }
