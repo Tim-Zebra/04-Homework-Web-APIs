@@ -4,6 +4,7 @@ var startQuiz = document.querySelector(".startQuiz")
 var timerEl = document.getElementById('timer');
 var mainHeader = document.getElementById('mainHeader');
 var buttonHighscores = document.getElementById("highscores");
+var footer = document.getElementById("footer");
 
 var initialsInput = null;
 var submitButton = null;
@@ -40,7 +41,8 @@ startQuiz.addEventListener("click", function() {
     // Hide Start Button
     startQuiz.remove();
     buttonHighscores.remove();
-
+    footer.remove();
+    
     // displays questions and answers
     displayQuestion();
 });
