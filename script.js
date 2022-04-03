@@ -10,18 +10,16 @@ var submitButton = null;
 var currentScore = 0;
 var timeLeft = 0;
 
+// highscores array will hold player data as objects. Each player's data will look like: {initials: , scores: }
+var highscoresArray = [];
+var highschoresEl = document.getElementById('highscores');
+
 // intializes the program, pulls highscores from storage.
 function init() {
-    // Loads highscores from local dat
-    var storedHighscores = JSON.parse(localStorage.getItem("Highscores"))
-
-    // Determines if there was anything in local storage. And if not, then do nothing.
-    if (storedHighscores !== null) {
-        highscores = storedHighscores;
-    }
-
-    displayHighscores();
+    getHighscores();
 }
+
+init();
 
 startQuiz.addEventListener("click", function() {
     //Remove the <p> element describing the game
@@ -46,10 +44,6 @@ startQuiz.addEventListener("click", function() {
 
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ A button for view Highscores  //////////////////////////////////////////
 // displays in top left corner. When highscores are being view, dispears
-
-// highscores array holds arrays made of [score, initials]
-var highscoresArray = [];
-var highschoresEl = document.getElementById('highscores');
 
 // Generates highscore form 
 function formHighscore () {
@@ -79,17 +73,19 @@ function formHighscore () {
         event.preventDefault();
 
         var initials = initialsInput.value.trim();
-        var array = [];
+        var data = {};
         
         if (initials === "") {
             return;
         }
         
-        array = [currentScore, initials];
-        highscoresArray.push(array);
+        data.initials = initials;
+        data.score = currentScore;
+        highscoresArray.push(data);
         initialsInput.value = "";
         
         storeHighscores();
+        form.remove();
         displayHighscores();
     })
  }
@@ -99,10 +95,39 @@ function storeHighscores() {
     localStorage.setItem("highscores", JSON.stringify(highscoresArray));
 }
 
+// Gets locally stored highscores
+function getHighscores () {
+    highscoresArray = JSON.parse(localStorage.getItem("highscores"));
+}
+
 // // display highscore list
 function displayHighscores () {
-    highscoresArray = JSON.parse(localStorage.getItem("highscores"));
-    
+    getHighscores();
+
+    // Display the highscores
+    mainHeader.textContent = "HIGHSCORES";
+
+    // // Arrange highscores by...score
+    highscoresArray.sort((a, b) => b.score - a.score)
+
+    // // Creates a list of highscores.
+    // var ol = document.createElement("ol");
+    // ol.setAttribute("id", "answerList");
+
+    // // Loads highscores into a list
+    // for(var i = 0; i < answerArray.length;  i++) {
+    //     var li = document.createElement("li");
+    //     li.textContent = answerArray[i][0];
+    //     li.setAttribute('data-correct', answerArray[i][1]);
+
+    //     ol.appendChild(li);
+    // }
+
+    // // Adds completed list to the main tag
+    // main.appendChild(ol);
+    // Display a list of highscores
+
+
 }
 
 // When highscores button is selected, before game starts, player can view highscores
