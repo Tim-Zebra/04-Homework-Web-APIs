@@ -4,6 +4,7 @@ var startQuiz = document.querySelector(".startQuiz")
 var timerEl = document.getElementById('timer');
 var mainHeader = document.getElementById('mainHeader');
 var initialsInput = null;
+var submitButton = null;
 
 // Other variables
 var currentScore = 0;
@@ -72,6 +73,24 @@ function formHighscore () {
     main.appendChild(form);
 
     initialsInput = document.getElementById('initialsText');
+    submitButton = document.getElementById('submitButton');
+
+    submitButton.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        var initials = initialsInput.value.trim();
+        var array = [];
+        
+        if (initials === "") {
+            return;
+        }
+        
+        array = [currentScore, initials];
+        highscores.push(array);
+        initialsInput.value = "";
+        
+        console.log(highscores);
+    })
  }
 
 // Store highscore locally
@@ -163,25 +182,6 @@ main.addEventListener("click", function(event) {
     clearAnswers();
     displayQuestion();    
     }
-
-    // Determines if highscoreSubmit Button was pressed
-    if (element.matches("button") === true) {
-        var initials = initialsInput.value.trim();
-        var array = [];
-    
-        if (initials === "") {
-            return;
-        }
-    
-        array = [currentScore, initials];
-        highscores.push(array);
-        initialsInput.value = "";
-    
-        console.log(highscores);
-        // storeHighscores();
-    }
-
-
 });
 
 
