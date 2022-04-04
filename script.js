@@ -13,7 +13,7 @@ var submitButton = null;
 var currentScore = 0;
 var timeLeft = 0;
 // Initial clock in seconds. Always use 1 value less than what you want
-var timeLeft = 19;
+var timeLeft = 59;
 
 
 // highscores array will hold player data as objects. Each player's data will look like: {initials: , score: }
