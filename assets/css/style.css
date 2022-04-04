@@ -1,3 +1,10 @@
+:root {
+    --green: rgb(99, 228, 99);
+    --darkBlack: rgb(0, 0, 27);
+    --orange: rgb(204, 92, 40);
+    --white: rgb(216, 216, 216);
+}
+
 * {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -41,9 +48,16 @@ main ol li {
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 10px;
-    background-color: green;
+    padding-left: 20px;
+    background-color: var(--green);
     width: 50%;
     border-radius: 20px 40px 20px 20px / 20px 40px 10px 20px;
+    text-align: start;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 80px 0px;
 }
 
 #timer {
@@ -58,8 +72,31 @@ main ol li {
     display: inline-block;
 }
 
-/* Animations */
+.highscoresList {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    font-size: 130%;
+    justify-content: space-around;
+}
 
+
+/* Animations */
+main ol li:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 20px 2px var(--darkBlack);
+    transition: 0.3s;
+}
+
+main ol li:active {
+    border-color:var(--darkBlack);
+    border-width: 2px;
+    border-style: inset;
+    font-weight: bolder;
+    background-color: var(--orange);
+    color: var(--white);
+}
 
 /* Screen size change */
 @media screen and (max-width: 400px) {

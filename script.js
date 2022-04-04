@@ -13,7 +13,7 @@ var submitButton = null;
 var currentScore = 0;
 var timeLeft = 0;
 // Initial clock in seconds. Always use 1 value less than what you want
-var timeLeft = 1000;
+var timeLeft = 50;
 
 
 // highscores array will hold player data as objects. Each player's data will look like: {initials: , score: }
@@ -65,6 +65,7 @@ buttonHighscores.addEventListener("click", function () {
 // Generates highscore form 
 function formHighscore () {
     // creates the submission form for high scores
+    console.log(highscoresArray);
     var form = document.createElement("form");
     form.setAttribute('id', 'form');
     form.setAttribute('method', 'POST');
@@ -98,7 +99,9 @@ function formHighscore () {
         
         data.initials = initials;
         data.score = currentScore;
+
         highscoresArray.push(data);
+
         initialsInput.value = "";
         
         storeHighscores();
@@ -114,7 +117,9 @@ function storeHighscores() {
 
 // Gets locally stored highscores
 function getHighscores () {
+    if (JSON.parse(localStorage.getItem("highscores")) !== null) {
     highscoresArray = JSON.parse(localStorage.getItem("highscores"));
+    }
 }
 
 // // display highscore list
@@ -126,10 +131,15 @@ function displayHighscores () {
     timerEl.remove();
 
     // Display the highscores
-    mainHeader.textContent = "HIGHSCORES";
+    var colorHeader = mainHeader.textContent = "HIGHSCORES";
 
-    // // Arrange highscores by...score
-    highscoresArray.sort((a, b) => b.score - a.score)
+    randomColorHighscoreLetters(colorHeader);
+
+    // Refreshes Highscore letters with random colors
+    window.setInterval(function () {
+        // Adds color to each letter and outputs them into mainHeader
+        randomColorHighscoreLetters(colorHeader);
+    }, 1000);
 
     // Creates a table for high scores
     var table = document.createElement("table");
@@ -148,20 +158,29 @@ function displayHighscores () {
     // adds header to table
     table.appendChild(tr);
 
-    // Loads highscores into the table
-    for(var i = 0; i < highscoresArray.length;  i++) {
-        tr = document.createElement("tr");
-        tdPlayer = document.createElement("td");
-        tdScore = document.createElement("td");
 
-        tdPlayer.textContent = highscoresArray[i].initials;
-        tr.appendChild(tdPlayer);
+    // // Arrange highscores by...score
+    if (highscoresArray.length > 1) {
+        highscoresArray.sort((a, b) => b.score - a.score)
+    }
 
-        tdScore.textContent = highscoresArray[i].score;
-        tr.appendChild(tdScore);
+    if (highscoresArray.length > 0) {
 
-        table.appendChild(tr);
-     }
+        // Loads highscores into the table
+        for(var i = 0; i < highscoresArray.length;  i++) {
+            tr = document.createElement("tr");
+            tdPlayer = document.createElement("td");
+            tdScore = document.createElement("td");
+
+            tdPlayer.textContent = highscoresArray[i].initials;
+            tr.appendChild(tdPlayer);
+
+            tdScore.textContent = highscoresArray[i].score;
+            tr.appendChild(tdScore);
+
+            table.appendChild(tr);
+        }
+    }
 
     // Adds completed table to the main tag
     main.appendChild(table);
@@ -175,23 +194,35 @@ function displayHighscores () {
      button.addEventListener("click", function() {
         location.reload();
      });
+
+}
+
+// Adds a random color to each letter of the header
+function randomColorHighscoreLetters (colorHeader) {
+    mainHeader.textContent = "";
+    for (var i = 0; i < colorHeader.length; i++) {
+        // creates span variable for a single letter
+        var letter = document.createElement("span");
+        letter.textContent = colorHeader[i];
+
+        //Generates a random color for the variable
+        var randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+
+        letter.setAttribute("style", "color:" + randomColor);
+        mainHeader.appendChild(letter);
+    }
 }
 
 // When highscores button is selected, before game starts, player can view highscores
 
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ A timer that counts down  //////////////////////////////////////////////
-// displays Timer
-
-// Timer displays in top right corner.
-// Appears only during quiz
-
 // Timer that counts down by seconds
 function timer() {
     // +1 accounts for the lag at the start due to the timeInterval
     timerEl.textContent = "Time Remaining: " + (timeLeft+1) + " seconds";
 
     // Time counter
-    var timeInterval = setInterval(function () {
+        var timeInterval = setInterval(function () {
         timerEl.textContent = "Time Remaining: " + timeLeft + " seconds";
         timeLeft--;
 
@@ -259,21 +290,111 @@ main.addEventListener("click", function(event) {
 // Stores questions
 var questionBank = {
     question1: {
-        question: 'This is a Question#1?',
+        question: 'What are HTML semantic elements?',
         answers: {
-            choice1: ["This is a answer #1?", false],
-            choice2: ["This is a answer #2?", false],
-            choice3: ["This is a answer #3?", true],
-            choice4: ["This is a answer #4?", false],
+            choice1: ["A semantic element clearly describes its meaning to both the browser and the developer.", true],
+            choice2: ["A semantic element reveals nothing about its content to the browser or the developer.", false],
+            choice3: ["Semantic elements are outdated and are no longer used in HTML.", false],
+            choice4: ["Semantic elements, like `<div>`, hold the important content together so it's easy to understand.", false],
         }
     },
     question2: {
-        question: 'This is a Question#2?',
+        question: 'What CSS declaration could you add to `<div style="width: 50%;">` to center it?',
         answers: {
-            choice1: ["This is a answer #21?", false],
-            choice2: ["This is a answer #22?", false],
-            choice3: ["This is a answer #23?", true],
-            choice4: ["This is a answer #24?", false],
+            choice1: ["align: center", false],
+            choice2: ["float: center", false],
+            choice3: ["text-align: center", false],
+            choice4: ["margin: 0 auto", true],
+        }
+    },
+    question3: {
+        question: 'Which of the following statements are NOT true?',
+        answers: {
+            choice1: ["Inline elements are elements that only take up as much width as needed.", false],
+            choice2: ["Block elements take all the possible width, regardless of its actual size.", false],
+            choice3: ["Inline elements automatically start a new line.", true],
+            choice4: ["Block elements are elements that always start on a new line.", false],
+        }
+    },
+    question4: {
+        question: 'What is one advantage of Responsive Design for a developer?',
+        answers: {
+            choice1: ["Faster page loading time", false],
+            choice2: ["Faster development", true],
+            choice3: ["More social sharing", false],
+            choice4: ["Improved SEO", false],
+        }
+    },
+    question5: {
+        question: 'How do you declare a custom property or \'CSS variable\'?',
+        answers: {
+            choice1: ["var root-my-color = green;", false],
+            choice2: [":root { var my-color = green; }", false],
+            choice3: ["var my-color = green;", false],
+            choice4: [":root { --my-color: green; }", true],
+        }
+    },
+    question6: {
+        question: 'Which attribute selector would you use if you wanted to target all <a> elements that have an href value that ends with \'.png\' to change the color? What would this look like in style.css?',
+        answers: {
+            choice1: ["a.href { color: green }", false],
+            choice2: [".href$'.png' { color: green }", false],
+            choice3: ["a[href$='.png']{ color: green }", true],
+            choice4: ["a[href.png] { color: green }", false],
+        }
+    },
+    question7: {
+        question: 'Inside the HTML document, where do you place your JavaScript code?',
+        answers: {
+            choice1: ["Inside the <link> element", false],
+            choice2: ["In the <footer> element", false],
+            choice3: ["Inside the <head> element", false],
+            choice4: ["Inside the <script> element", true],
+        }
+    },
+    question8: {
+        question: 'What are the six primitive data types in JavaScript?',
+        answers: {
+            choice1: ["string, num, falsy, bigInt, symbol, undefined", false],
+            choice2: ["string, number, boolean, bigInt, symbol, undefined", true],
+            choice3: ["sentence, int, truthy, bigInt, symbol, undefined", false],
+            choice4: ["sentence, float, data, bigInt, symbol, undefined", false],
+        }
+    },
+    question9: {
+        question: 'From the given array which index is the letter \'b\' on? [\'a\', \'b\', \'c\', \'d\']',
+        answers: {
+            choice1: ["1", true],
+            choice2: ["3", false],
+            choice3: ["2", false],
+            choice4: ["0", false],
+        }
+    },
+    question10: {
+        question: 'Which of the following would change an element\'s background to red?',
+        answers: {
+            choice1: ["element.setAttribute(\"red\");", false],
+            choice2: ["element.setAttribute(\"style\", \"red\");", false],
+            choice3: ["element.setAttribute(\"class\", \"background: red\");", false],
+            choice4: ["element.setAttribute(\"style\", \"background-color: red\");", true],
+        }
+    },
+    question11: {
+        question: '\"How would you append the following to the DOM? var myDiv = document.createElement(\"div\");',
+        answers: {
+            choice1: ["myDiv.appendChild.document.body;", false],
+            choice2: ["document.body.appendChild = myDiv;", false],
+            choice3: ["document.body.appendChild(\"div\");", false],
+            choice4: ["document.body.appendChild(myDiv);", true],
+        }
+    },
+    question12: {
+        question: 'Which statement best describes what is happening to data when it is persisted to local storage.',
+        answers: {
+            choice1: ["The data is stored in the client or browser.", true],
+            choice2: ["The data is stored under the Applications tab in Chrome Dev Tools.", false],
+            choice3: ["The data is stored in the database in the backend.", false],
+            choice4: ["The data is stored in the window called localStorage.", false],
         }
     }
 }
@@ -299,6 +420,7 @@ function getQuestion () {
     if (Object.keys(questionBank).length < questionNumber) {
         question = 'No more questions to choose from!';
         answerArray = [];
+        
         return;
     }
 
