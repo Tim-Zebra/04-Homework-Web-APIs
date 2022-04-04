@@ -213,8 +213,6 @@ function randomColorHighscoreLetters (colorHeader) {
     }
 }
 
-// When highscores button is selected, before game starts, player can view highscores
-
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ A timer that counts down  //////////////////////////////////////////////
 // Timer that counts down by seconds
 function timer() {
