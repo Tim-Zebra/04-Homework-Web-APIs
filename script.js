@@ -12,6 +12,9 @@ var submitButton = null;
 // Other variables
 var currentScore = 0;
 var timeLeft = 0;
+// Initial clock in seconds. Always use 1 value less than what you want
+var timeLeft = 1000;
+
 
 // highscores array will hold player data as objects. Each player's data will look like: {initials: , score: }
 var highscoresArray = [];
@@ -42,7 +45,7 @@ startQuiz.addEventListener("click", function() {
     startQuiz.remove();
     buttonHighscores.remove();
     footer.remove();
-    
+
     // displays questions and answers
     displayQuestion();
 });
@@ -184,8 +187,6 @@ function displayHighscores () {
 
 // Timer that counts down by seconds
 function timer() {
-    // Initial clock in seconds. Always use 1 value less than what you want
-    timeLeft = 2;
     // +1 accounts for the lag at the start due to the timeInterval
     timerEl.textContent = "Time Remaining: " + (timeLeft+1) + " seconds";
 
@@ -321,7 +322,7 @@ function loadAnswers() {
     // Loads answers into the list
     for(var i = 0; i < answerArray.length;  i++) {
         var li = document.createElement("li");
-        li.textContent = answerArray[i][0];
+        li.textContent = (i + 1) + ". " + answerArray[i][0];
         li.setAttribute('data-correct', answerArray[i][1]);
 
         ol.appendChild(li);
