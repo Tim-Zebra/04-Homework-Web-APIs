@@ -3,6 +3,13 @@ UT Bootcamp - A timed "code concepts" multiple choice quiz built  from scratch u
 
 JS - function init() inspired by UT Bootcamp Course Web-APIs
 
+Example Demo:
+https://drive.google.com/file/d/1rigXmtqFRKEs5yT_n2myBCuHyHnZqOWt/view
+
+Deployed at:
+https://tim-zebra.github.io/04-Homework-Web-APIs/
+
+References: 
 JS - Array of objects sort function learned from:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 https://www.w3schools.com/js/js_array_sort.asp
