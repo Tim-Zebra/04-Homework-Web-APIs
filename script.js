@@ -227,7 +227,7 @@ function timer() {
             timerEl.setAttribute("style", "color: red");
         }
 
-        if(timeLeft < 0) {
+        if(timeLeft <= 0) {
             clearInterval(timeInterval);
             timerEl.textContent = "TIMES UP!";
             endGame();
@@ -417,7 +417,7 @@ function getQuestion () {
     if (Object.keys(questionBank).length < questionNumber) {
         question = 'No more questions to choose from!';
         answerArray = [];
-        
+        timeLeft=0;
         return;
     }
 
