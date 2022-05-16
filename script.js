@@ -11,7 +11,6 @@ var submitButton = null;
 
 // Other variables
 var currentScore = 0;
-var timeLeft = 0;
 // Initial clock in seconds. Always use 1 value less than what you want
 var timeLeft = 59;
 
@@ -457,5 +456,3 @@ function clearAnswers () {
     var list = document.getElementById("answerList");
     list.remove();
 }
-
-// init();
