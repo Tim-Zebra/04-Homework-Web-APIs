@@ -7,7 +7,7 @@ Example Demo:
 https://drive.google.com/file/d/1rigXmtqFRKEs5yT_n2myBCuHyHnZqOWt/view
 
 Deployed at:
-https://tim-zebra.github.io/04-Homework-Web-APIs/
+https://tim-zebra.github.io/Coding-Quiz-Challenge/
 
 References: 
 JS - Array of objects sort function learned from:
